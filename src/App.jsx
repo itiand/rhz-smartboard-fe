@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <h1>Smartboard</h1>
+      <h1 className="text-3xl font-bold underline">Smartboard</h1>
     </>
   );
 }
