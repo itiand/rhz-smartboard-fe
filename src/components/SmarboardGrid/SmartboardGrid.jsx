@@ -34,16 +34,51 @@ const SmartboardGrid = () => {
       alt: "Square item",
       size: "400x400",
     },
+    {
+      src: "https://placehold.co/100x367/e0e0e0/888888",
+      alt: "super tall item",
+      size: "100x367",
+    },
+    {
+      src: "https://placehold.co/367x100/e0e0e0/888888",
+      alt: "super wide item",
+      size: "367x100",
+    },
   ];
 
+  // Get aspect ratio details for constraining image heights
+  const getImageStyle = (size) => {
+    const [width, height] = size.split("x").map(Number);
+    const aspectRatio = width / height;
+
+    // For very tall images (portrait)
+    if (aspectRatio < 0.7) {
+      return "max-h-[500px] object-cover"; // Limit height, maintain aspect
+    }
+
+    // For very wide images (landscape)
+    if (aspectRatio > 2.5) {
+      return "max-h-[300px] object-cover"; // Limit height for wide panoramas
+    }
+
+    // Default - let image display naturally with aspect ratio preserved
+    return "h-auto";
+  };
+
   return (
-    <div className="p-4 columns-1 md:columns-2 lg:columns-3 gap-4">
+    <div className="masonry-grid p-4 columns-1 md:columns-2 lg:columns-3 gap-4">
       {placeholderImages.map((image, index) => (
         <div
           key={index}
-          className="mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
+          className="masonry-grid__item mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
         >
-          <img src={image.src} alt={image.alt} className="w-full h-auto" />
+          <img
+            src={image.src}
+            alt={image.alt}
+            className={`masonry-grid__item__image w-full ${getImageStyle(
+              image.size
+            )}`}
+          />
         </div>
       ))}
     </div>
