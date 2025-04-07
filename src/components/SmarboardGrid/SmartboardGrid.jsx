@@ -53,12 +53,12 @@ const SmartboardGrid = () => {
 
     // For very tall images (portrait)
     if (aspectRatio < 0.7) {
-      return "max-h-[500px] object-cover"; // Limit height, maintain aspect
+      return "max-h-[500px] object-cover border-3 border-red-500"; // Limit height, maintain aspect
     }
 
     // For very wide images (landscape)
     if (aspectRatio > 2.5) {
-      return "max-h-[300px] object-cover"; // Limit height for wide panoramas
+      return "max-h-[300px] object-cover border-3 border-red-500"; // Limit height for wide panoramas
     }
 
     // Default - let image display naturally with aspect ratio preserved
@@ -66,7 +66,7 @@ const SmartboardGrid = () => {
   };
 
   return (
-    <div className="masonry-grid p-4 columns-1 md:columns-2 lg:columns-3 gap-4">
+    <div className="masonry-grid p-4 columns-2 lg:columns-3 gap-4">
       {placeholderImages.map((image, index) => (
         <div
           key={index}

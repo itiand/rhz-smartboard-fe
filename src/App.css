@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+
+:root {
+  --container-width: 1200px;
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
