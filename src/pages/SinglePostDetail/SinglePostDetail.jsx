@@ -86,8 +86,8 @@ const SinglePostDetail = () => {
           {/* POST TITLE AND HEART ICON */}
           <div className="flex justify-between items-center">
             <h2>{post.title}</h2>
-            <button>
-              <Heart size={20} />
+            <button className="like-button" aria-label="Like post">
+              <Heart aria-hidden="true" size={20} />
             </button>
           </div>
 
@@ -112,9 +112,13 @@ const SinglePostDetail = () => {
             <p>Source</p>
           </div>
           <div className="border-t border-gray-300"></div>
-          <div className="flex gap-x-4 text-xs">
-            <p>share</p>
-            <p>download</p>
+          <div className="flex gap-x-2 text-xs">
+            <button className="share-button" aria-label="Share post">
+              <Share aria-hidden="true" size={15} />
+            </button>
+            <button className="download-button" aria-label="Download post">
+              <Download aria-hidden="true" size={15} />
+            </button>
           </div>
 
           {/* COMMENTS SECTION */}
