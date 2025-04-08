@@ -25,7 +25,7 @@ const SinglePostDetail = () => {
       {
         id: 1,
         user: {
-          name: "Sarah Parker",
+          name: "Sarah_Parker",
           avatar: "https://placehold.co/50x50/e0e0e0/777777",
         },
         text: "Absolutely stunning! Where was this taken?",
@@ -34,7 +34,7 @@ const SinglePostDetail = () => {
       {
         id: 2,
         user: {
-          name: "Michael Rodriguez",
+          name: "Michael_Rodriguez",
           avatar: "https://placehold.co/50x50/e0e0e0/666666",
         },
         text: "The lighting in this shot is perfect! What camera did you use?",
@@ -43,10 +43,19 @@ const SinglePostDetail = () => {
       {
         id: 3,
         user: {
-          name: "Emily Chen",
+          name: "Emily_Chen",
           avatar: "https://placehold.co/50x50/e0e0e0/555555",
         },
-        text: "This reminds me of my trip last summer. Great composition!",
+        text: "This reminds me of my trip last summer. Great composition! #travel #nature #naturephotography    longer comment extra text trugfdgdfsdfdsfdsagdas dfas ",
+        posted: "2023-06-16T09:15:00Z",
+      },
+      {
+        id: 4,
+        user: {
+          name: "John_Doe",
+          avatar: "https://placehold.co/50x50/e0e0e0/444444",
+        },
+        text: "This is a beautiful shot I took last weekend. #photography #nature",
         posted: "2023-06-16T09:15:00Z",
       },
     ],
@@ -67,7 +76,7 @@ const SinglePostDetail = () => {
         <div id="left" className="blue-border col-span-3">
           <img src={post.image} alt={post.caption} />
         </div>
-        <div id="post-details" className="blue-border col-span-2">
+        <div id="post-details" className="blue-border col-span-2 p-4">
           <div>
             <h2>{post.title}</h2>
             <i>heart icon</i>
@@ -83,23 +92,28 @@ const SinglePostDetail = () => {
             <p>share</p>
             <p>download</p>
           </div>
-          <div className="comments">
-            <p>{post.comments.length} comments</p>
-            {post.comments.map((comment) => (
-              <div className="comment-item" key={comment.id}>
-                <div>
-                  <img
-                    src={comment.user.avatar}
-                    alt={comment.user.name}
-                    className="max-w-10 max-h-10 rounded-full"
-                  />
-                  <p>{comment.user.name}</p>
+          <div className="comments blue-border">
+            <p className="text-xs mb-2">{post.comments.length} comments</p>
+            <div className="comments-list green-border flex flex-col gap-y-3">
+              {post.comments.map((comment) => (
+                <div
+                  className="comment-item flex  gap-x-1 text-xs green-border py-1"
+                  key={comment.id}
+                >
+                  <div className="profile-image pt-0.5">
+                    <img
+                      src={comment.user.avatar}
+                      alt={comment.user.name}
+                      className="w-full h-auto rounded-full max-w-9 max-h-9"
+                    />
+                  </div>
+                  <div className="comment-text flex-1">
+                    <p className="font-bold">{comment.user.name}</p>
+                    <p>{comment.text}</p>
+                  </div>
                 </div>
-                <div>
-                  <p>{comment.text}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
