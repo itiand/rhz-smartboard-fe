@@ -1,5 +1,5 @@
 /* Center the upload container */
-.file-upload-container {
+.fileUploadContainer {
   max-width: 500px;
   margin: 40px auto;
   padding: 20px;
@@ -7,19 +7,6 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-}
-
-/* Flex container to align text and button*/
-.file-upload-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: #fff;
 }
 
 /* File label text (Image / Audio) */
@@ -52,7 +39,7 @@ input[type="file"] {
 }
 
 /* Submit button styling */
-button {
+.fileUploadContainer button {
   background-color: #4dace2;
   color: white;
   border: none;
@@ -64,7 +51,7 @@ button {
   transition: background 0.3s ease-in-out;
 }
 
-button:hover {
+.fileUploadContainer button:hover {
   background-color: #218838;
 }
 
@@ -79,18 +66,6 @@ button:hover {
 .uploaded-files-container h3 {
   font-size: 18px;
   margin-bottom: 10px;
-}
-
-ul {
-  padding: 0;
-}
-
-ul li {
-  padding: 5px;
-  font-size: 14px;
-  background: #d9edf7;
-  margin: 5px 0;
-  border-radius: 4px;
 }
 
 /* Error message styling */
