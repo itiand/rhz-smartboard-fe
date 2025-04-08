@@ -1,13 +1,37 @@
 @import "tailwindcss";
 
-
 :root {
   --container-width: 1200px;
 }
 
+/* resets */
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* utility classes */
+.red-border {
+  border: 1px solid red;
+}
+
+.blue-border {
+  border: 1px solid blue;
+}
+
+.green-border {
+  border: 1px solid green;
+}
+
+.__block {
+  display: flex;
+  width: 100%;
+}
+
+/* */
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 20px;
 }
-

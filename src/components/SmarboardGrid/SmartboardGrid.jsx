@@ -78,15 +78,13 @@ const SmartboardGrid = () => {
     <div className="masonry-grid p-4 columns-2 lg:columns-3 gap-4">
       {placeholderPosts.map((post) => (
         <Link to={`/post/${post.id}`} key={post.id}>
-          <div
-            className="masonry-grid__item mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
-        >
-          <img
-            src={post.src}
-            alt={post.alt}
-            className={`masonry-grid__item__image w-full ${getImageStyle(
-              post.size
-            )}`}
+          <div className="masonry-grid__item mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow">
+            <img
+              src={post.src}
+              alt={post.alt}
+              className={`masonry-grid__item__image w-full ${getImageStyle(
+                post.size
+              )}`}
             />
           </div>
         </Link>
