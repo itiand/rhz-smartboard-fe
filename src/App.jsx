@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home";
-import SinglePostDetail from "./pages/SinglePostDetail";
+import SinglePostDetail from "./pages/SinglePostDetail/SinglePostDetail";
 import "./App.css";
 
 function App() {
