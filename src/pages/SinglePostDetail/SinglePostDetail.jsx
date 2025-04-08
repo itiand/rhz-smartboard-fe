@@ -2,11 +2,12 @@ import React from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import "./SinglePostDetail.css";
 import { formatDistanceToNow } from "date-fns";
+// Import Lucide icons
+import { Heart, Share, Download } from "lucide-react";
 
 const SinglePostDetail = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
-  console.log("postId", postId);
 
   // Mock data for demo - in real app, fetch this based on postId
   const post = {
@@ -83,14 +84,21 @@ const SinglePostDetail = () => {
         {/* POST DETAILS - RIGHT COLUMN */}
         <div className="right post-details-column blue-border col-span-2 p-4 flex flex-col  gap-y-4">
           {/* POST TITLE AND HEART ICON */}
-          <div>
+          <div className="flex justify-between items-center">
             <h2>{post.title}</h2>
-            <i>heart icon</i>
+            <button>
+              <Heart size={20} />
+            </button>
           </div>
 
           {/* POST DETAILS */}
-          <div className="text-xs">
-            <p>Added 1/21/23</p>
+          <div className="text-xs leading-5">
+            <p>
+              Added{" "}
+              {formatDistanceToNow(new Date(post.added), {
+                addSuffix: true,
+              })}
+            </p>
             <p>
               Project by <strong>{post.user.name}</strong>
             </p>

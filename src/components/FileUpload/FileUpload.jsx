@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./FileUpload.css";
+import styles from "./FileUpload.module.css";
 
 // Defining state variables of what is being used in this file
 const FileUpload = () => {
@@ -62,7 +62,7 @@ const FileUpload = () => {
   };
 
   return (
-    <div className="file-upload-container">
+    <div className={styles.fileUploadContainer}>
       {/* Editable Smartboard Title */}
       <h2>
         <input
