@@ -76,10 +76,10 @@ const SmartboardGrid = () => {
 
   return (
     <div className="masonry-grid p-4 columns-2 lg:columns-3 gap-4">
-      {placeholderPosts.map((post, index) => (
-        <div
-          key={index}
-          className="masonry-grid__item mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
+      {placeholderPosts.map((post) => (
+        <Link to={`/post/${post.id}`} key={post.id}>
+          <div
+            className="masonry-grid__item mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
         >
           <img
             src={post.src}
@@ -87,8 +87,9 @@ const SmartboardGrid = () => {
             className={`masonry-grid__item__image w-full ${getImageStyle(
               post.size
             )}`}
-          />
-        </div>
+            />
+          </div>
+        </Link>
       ))}
     </div>
   );
