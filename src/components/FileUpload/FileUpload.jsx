@@ -4,8 +4,8 @@ import "./FileUpload.css";
 
 // Defining state variables of what is being used in this file
 const FileUpload = () => {
-  const [image, setImage] = useState(null);
-  const [audio, setAudio] = useState(null);
+  const [images, setImages] = useState([]); // Updated to store multiple images
+  const [audios, setAudios] = useState([]); // Updated to store multiple audios
   const [uploadStatus, setUploadStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState(null);
@@ -15,12 +15,13 @@ const FileUpload = () => {
   // Trigger Function when file is uploaded by a user
   const handleFileChange = (e) => {
     const { name, files } = e.target;
+    const fileArray = Array.from(files); // Convert FileList to Array for easier handling
 
-    if (name === "image" && files[0]) {
-      setImage(files[0]);
-      setPreviewImage(URL.createObjectURL(files[0])); // Generate preview URL
-    } else if (name === "audio" && files[0]) {
-      setAudio(files[0]);
+    if (name === "image" && fileArray.length > 0) {
+      setImages(fileArray);
+      setPreviewImage(URL.createObjectURL(fileArray[0])); // Generate preview URL of first image
+    } else if (name === "audio" && fileArray.length > 0) {
+      setAudios(fileArray);
     }
   };
 
@@ -30,8 +31,16 @@ const FileUpload = () => {
 
     // Creating a form data to store selected files when uploaded
     const formData = new FormData();
-    if (image) formData.append("image", image);
-    if (audio) formData.append("audio", audio);
+
+    // Append all image files under the same key
+    images.forEach((file) => {
+      formData.append("image", file);
+    });
+
+    // Append all audio files under the same key
+    audios.forEach((file) => {
+      formData.append("audio", file);
+    });
 
     try {
       setUploadStatus("Uploading...");
@@ -91,6 +100,7 @@ const FileUpload = () => {
               type="file"
               name="image"
               accept="image/*"
+              multiple 
               onChange={handleFileChange}
             />
           </label>
@@ -102,6 +112,7 @@ const FileUpload = () => {
               type="file"
               name="audio"
               accept="audio/*"
+              multiple 
               onChange={handleFileChange}
             />
           </label>
@@ -126,16 +137,20 @@ const FileUpload = () => {
         <div>
           <h3>Uploaded Files:</h3>
           <ul>
-            {uploadedFiles.image && (
-              <li>
-                <strong>Image:</strong> {uploadedFiles.image}
-              </li>
-            )}
-            {uploadedFiles.audio && (
-              <li>
-                <strong>Audio:</strong> {uploadedFiles.audio}
-              </li>
-            )}
+            {/* Show all uploaded image paths */}
+            {uploadedFiles.image &&
+              uploadedFiles.image.map((img, index) => (
+                <li key={index}>
+                  <strong>Image {index + 1}:</strong> {img}
+                </li>
+              ))}
+            {/* Show all uploaded audio paths */}
+            {uploadedFiles.audio &&
+              uploadedFiles.audio.map((aud, index) => (
+                <li key={index}>
+                  <strong>Audio {index + 1}:</strong> {aud}
+                </li>
+              ))}
           </ul>
         </div>
       )}
