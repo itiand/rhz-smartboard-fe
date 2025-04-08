@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import "./SinglePostDetail.css";
+import { formatDistanceToNow } from "date-fns";
+
 const SinglePostDetail = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -72,32 +74,46 @@ const SinglePostDetail = () => {
         <button onClick={() => navigate(-1)}>Back</button>
       </div>
 
-      <div className="grid grid-cols-5 gap-4 red-border">
-        <div id="left" className="blue-border col-span-3">
+      <div className="grid grid-cols-5 gap-4 red-border mb-50">
+        {/* POST IMAGE - LEFT COLUMN */}
+        <div className="left blue-border col-span-3">
           <img src={post.image} alt={post.caption} />
         </div>
-        <div id="post-details" className="blue-border col-span-2 p-4">
+
+        {/* POST DETAILS - RIGHT COLUMN */}
+        <div className="right post-details-column blue-border col-span-2 p-4 flex flex-col  gap-y-4">
+          {/* POST TITLE AND HEART ICON */}
           <div>
             <h2>{post.title}</h2>
             <i>heart icon</i>
           </div>
-          <div>
+
+          {/* POST DETAILS */}
+          <div className="text-xs">
             <p>Added 1/21/23</p>
-            <p>Project by Hedi Jimson</p>
-            <p>Last updated 1 minute ago</p>
+            <p>
+              Project by <strong>{post.user.name}</strong>
+            </p>
+            {/* CALCULATE AGO */}
+            <p>
+              Last updated{" "}
+              {formatDistanceToNow(new Date(post.lastUpdated), {
+                addSuffix: true,
+              })}
+            </p>
             <p>Source</p>
           </div>
           <div className="border-t border-gray-300"></div>
-          <div>
+          <div className="flex gap-x-4 text-xs">
             <p>share</p>
             <p>download</p>
           </div>
 
           {/* COMMENTS SECTION */}
-          <div className="comments blue-border">
+          <div className="comments blue-border pb-3">
             <p className="text-xs mb-2">{post.comments.length} comments</p>
             {/* COMMENT LIST */}
-            <div className="comments-list green-border flex flex-col gap-y-3">
+            <div className="comments-list green-border flex flex-col gap-y-2">
               {/* COMMENT ITEM */}
               {post.comments.map((comment) => (
                 <div
@@ -113,7 +129,7 @@ const SinglePostDetail = () => {
                   </div>
                   <div className="comment-text flex-1">
                     <p className="font-bold">{comment.user.name}</p>
-                    <p>{comment.text}</p>
+                    <p className="leading-5">{comment.text}</p>
                   </div>
                 </div>
               ))}
@@ -121,7 +137,7 @@ const SinglePostDetail = () => {
           </div>
 
           {/* ADD TO SMARTBOARD */}
-          <div className="add-to-smartboard">
+          <div className="add-to-smartboard p-2 rounded-full text-center border max-w-64 border-gray-300  self-center w-full">
             <p>Add to smartboard</p>
           </div>
         </div>
