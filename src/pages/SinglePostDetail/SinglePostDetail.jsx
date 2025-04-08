@@ -77,12 +77,12 @@ const SinglePostDetail = () => {
 
       <div className="grid grid-cols-5 gap-4 red-border mb-50">
         {/* POST IMAGE - LEFT COLUMN */}
-        <div className="left blue-border col-span-3">
+        <div className="left blue-border col-span-3 flex items-center justify-center">
           <img src={post.image} alt={post.caption} />
         </div>
 
         {/* POST DETAILS - RIGHT COLUMN */}
-        <div className="right post-details-column blue-border col-span-2 p-4 flex flex-col  gap-y-4">
+        <div className="right post-details-column blue-border col-span-2 p-4 flex flex-col gap-y-4">
           {/* POST TITLE AND HEART ICON */}
           <div className="flex justify-between items-center">
             <h2>{post.title}</h2>
