@@ -12,7 +12,7 @@ function App() {
         <h1 className="text-3xl font-bold underline">Smartboard</h1>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/post/:postId" element={<SinglePostDetail />} />
+          <Route path="/post/:id" element={<SinglePostDetail />} />
         </Routes>
       </div>
     </BrowserRouter>

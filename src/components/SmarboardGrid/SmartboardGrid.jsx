@@ -1,45 +1,54 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./SmartboardGrid.css";
 
 const SmartboardGrid = () => {
   // Array of placeholder images with different dimensions
-  const placeholderImages = [
+  const placeholderPosts = [
     {
+      id: 1,
       src: "https://placehold.co/400x400/e0e0e0/888888",
       alt: "Large item",
       size: "400x400",
     },
     {
+      id: 2,
       src: "https://placehold.co/300x200/e0e0e0/888888",
       alt: "Small item",
       size: "300x200",
     },
     {
+      id: 3,
       src: "https://placehold.co/400x300/e0e0e0/888888",
       alt: "Medium item",
       size: "400x300",
     },
     {
+      id: 4,
       src: "https://placehold.co/300x500/e0e0e0/888888",
       alt: "Tall item",
       size: "300x500",
     },
     {
+      id: 5,
       src: "https://placehold.co/600x250/e0e0e0/888888",
       alt: "Wide item",
       size: "600x250",
     },
     {
+      id: 6,
       src: "https://placehold.co/400x400/e0e0e0/888888",
       alt: "Square item",
       size: "400x400",
     },
     {
+      id: 7,
       src: "https://placehold.co/100x367/e0e0e0/888888",
       alt: "super tall item",
       size: "100x367",
     },
     {
+      id: 8,
       src: "https://placehold.co/367x100/e0e0e0/888888",
       alt: "super wide item",
       size: "367x100",
@@ -67,16 +76,16 @@ const SmartboardGrid = () => {
 
   return (
     <div className="masonry-grid p-4 columns-2 lg:columns-3 gap-4">
-      {placeholderImages.map((image, index) => (
+      {placeholderPosts.map((post, index) => (
         <div
           key={index}
           className="masonry-grid__item mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
         >
           <img
-            src={image.src}
-            alt={image.alt}
+            src={post.src}
+            alt={post.alt}
             className={`masonry-grid__item__image w-full ${getImageStyle(
-              image.size
+              post.size
             )}`}
           />
         </div>
