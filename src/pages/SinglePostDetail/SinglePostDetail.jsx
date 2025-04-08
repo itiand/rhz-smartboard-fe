@@ -67,11 +67,39 @@ const SinglePostDetail = () => {
         <div id="left" className="blue-border col-span-3">
           <img src={post.image} alt={post.caption} />
         </div>
-        <div id="right" className="blue-border col-span-2">
+        <div id="post-details" className="blue-border col-span-2">
           <div>
-            <h2>{post.caption}</h2>
-            <p>{post.likes} likes</p>
+            <h2>{post.title}</h2>
+            <i>heart icon</i>
+          </div>
+          <div>
+            <p>Added 1/21/23</p>
+            <p>Project by Hedi Jimson</p>
+            <p>Last updated 1 minute ago</p>
+            <p>Source</p>
+          </div>
+          <div className="border-t border-gray-300"></div>
+          <div>
+            <p>share</p>
+            <p>download</p>
+          </div>
+          <div className="comments">
             <p>{post.comments.length} comments</p>
+            {post.comments.map((comment) => (
+              <div className="comment-item" key={comment.id}>
+                <div>
+                  <img
+                    src={comment.user.avatar}
+                    alt={comment.user.name}
+                    className="max-w-10 max-h-10 rounded-full"
+                  />
+                  <p>{comment.user.name}</p>
+                </div>
+                <div>
+                  <p>{comment.text}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
