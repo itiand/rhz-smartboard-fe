@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-
+import "./SinglePostDetail.css";
 const SinglePostDetail = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -92,9 +92,13 @@ const SinglePostDetail = () => {
             <p>share</p>
             <p>download</p>
           </div>
+
+          {/* COMMENTS SECTION */}
           <div className="comments blue-border">
             <p className="text-xs mb-2">{post.comments.length} comments</p>
+            {/* COMMENT LIST */}
             <div className="comments-list green-border flex flex-col gap-y-3">
+              {/* COMMENT ITEM */}
               {post.comments.map((comment) => (
                 <div
                   className="comment-item flex  gap-x-1 text-xs green-border py-1"
@@ -114,6 +118,11 @@ const SinglePostDetail = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* ADD TO SMARTBOARD */}
+          <div className="add-to-smartboard">
+            <p>Add to smartboard</p>
           </div>
         </div>
       </div>
