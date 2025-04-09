@@ -70,6 +70,35 @@ const FileUpload = () => {
     }
   };
 
+  // Function to handle file deletion
+  const handleDelete = async (filename) => {
+    try {
+      // Sending DELETE request to backend to remove file
+      const response = await axios.delete(`http://127.0.0.1:5000/upload/${filename}`);
+
+      // Log the response to debug
+      console.log("Backend Response (File Deletion):", response.data);
+
+      // Remove the file from the uploadedFiles state after successful deletion
+      setUploadedFiles((prevFiles) => {
+        const updatedFiles = { ...prevFiles };
+        // Remove the file from the appropriate category depending on image or audio
+        if (updatedFiles.image) {
+          updatedFiles.image = updatedFiles.image.filter((file) => file !== filename);
+        }
+        if (updatedFiles.audio) {
+          updatedFiles.audio = updatedFiles.audio.filter((file) => file !== filename);
+        }
+        return updatedFiles;
+      });
+
+      setUploadStatus(`File '${filename}' deleted successfully.`);
+    } catch (error) {
+      console.error("Error during deletion:", error); // Log error details
+      setErrorMessage("An error occurred while deleting the file.");
+    }
+  };
+
   return (
     <div className="file-upload-container">
       {/* Editable Smartboard Title */}
@@ -142,6 +171,7 @@ const FileUpload = () => {
               uploadedFiles.image.map((img, index) => (
                 <li key={index}>
                   <strong>Image {index + 1}:</strong> {img}
+                  <button onClick={() => handleDelete(img)}>Delete</button>
                 </li>
               ))}
             {/* Show all uploaded audio paths */}
@@ -149,6 +179,7 @@ const FileUpload = () => {
               uploadedFiles.audio.map((aud, index) => (
                 <li key={index}>
                   <strong>Audio {index + 1}:</strong> {aud}
+                  <button onClick={() => handleDelete(aud)}>Delete</button>
                 </li>
               ))}
           </ul>
