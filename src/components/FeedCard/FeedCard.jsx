@@ -1,7 +1,8 @@
 import styles from "./FeedCard.module.css";
 import { Heart, Share, MessageCircle } from "lucide-react";
+
 const FeedCard = (props) => {
-  const { title, description, image } = props;
+  const { title, category, image } = props;
   return (
     <div className="grey-border flex flex-col gap-2">
       <div className="img-block">
@@ -17,8 +18,8 @@ const FeedCard = (props) => {
             />
           </div>
           <div className="artist-name">
-            <p className="text-sm font-bold">Artist Name</p>
-            <p className="text-xs text-gray-500">category</p>
+            <p className="text-sm font-bold">{title}</p>
+            <p className="text-xs text-gray-500">{category}</p>
           </div>
         </div>
         <div className=" flex flex-row gap-4 items-center">
