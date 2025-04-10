@@ -75,17 +75,17 @@ const SinglePostDetail = () => {
         <button onClick={() => navigate(-1)}>Back</button>
       </div>
 
-      <div className="grid grid-cols-5 gap-4 mb-50 grey-border">
-        {/* POST IMAGE - LEFT COLUMN */}
-        <div className="left col-span-3 flex items-center justify-center">
+      <div className="flex flex-col gap-4 mb-50 grey-border md:grid md:grid-cols-5">
+        {/* POST IMAGE */}
+        <div className="flex items-center justify-center md:col-span-3">
           <img src={post.image} alt={post.caption} />
         </div>
 
-        {/* POST DETAILS - RIGHT COLUMN */}
-        <div className="right post-details-column col-span-2 p-4 flex flex-col gap-y-4">
+        {/* POST DETAILS  */}
+        <div className="p-4 flex flex-col gap-y-4 md:col-span-2">
           {/* POST TITLE AND HEART ICON */}
           <div className="flex justify-between items-center">
-            <h2 className="text-3xl">{post.title}</h2>
+            <h2 className="text-2xl md:text-3xl">{post.title}</h2>
             <button className="like-button" aria-label="Like post">
               <Heart aria-hidden="true" size={20} />
             </button>
@@ -129,14 +129,14 @@ const SinglePostDetail = () => {
               {/* COMMENT ITEM */}
               {post.comments.map((comment) => (
                 <div
-                  className="comment-item flex  gap-x-1 text-xs  py-1"
+                  className="comment-item flex gap-x-1 text-xs py-1"
                   key={comment.id}
                 >
                   <div className="profile-image pt-0.5">
                     <img
                       src={comment.user.avatar}
                       alt={comment.user.name}
-                      className="w-full h-auto rounded-full max-w-9 max-h-9"
+                      className="w-full h-auto rounded-full max-w-7 max-h-7 md:max-w-9 md:max-h-9"
                     />
                   </div>
                   <div className="comment-text flex-1">
@@ -149,7 +149,7 @@ const SinglePostDetail = () => {
           </div>
 
           {/* ADD TO SMARTBOARD */}
-          <div className="add-to-smartboard p-2 rounded-full text-center border max-w-64 border-gray-300  self-center w-full">
+          <div className="add-to-smartboard p-2 rounded-full text-center border w-full max-w-full md:max-w-64 border-gray-300 self-center">
             <p>Add to smartboard</p>
           </div>
         </div>
