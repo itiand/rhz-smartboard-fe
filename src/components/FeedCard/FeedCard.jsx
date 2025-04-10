@@ -1,5 +1,5 @@
 import styles from "./FeedCard.module.css";
-
+import { Heart, Share, MessageCircle } from "lucide-react";
 const FeedCard = (props) => {
   const { title, description, image } = props;
   return (
@@ -7,7 +7,7 @@ const FeedCard = (props) => {
       <div className="img-block">
         <img src={image} alt="placeholder" className="object-cover" />
       </div>
-      <div className="flex flex-col gap-1 p-2 pb-4">
+      <div className="flex flex-row gap-1 p-2 pb-4 justify-between">
         <div className="artist-info flex flex-row gap-2 items-center">
           <div className="profile-image pt-0.5">
             <img
@@ -20,6 +20,11 @@ const FeedCard = (props) => {
             <p className="text-sm font-bold">Artist Name</p>
             <p className="text-xs text-gray-500">category</p>
           </div>
+        </div>
+        <div className=" flex flex-row gap-4 items-center">
+          <MessageCircle aria-hidden="true" size={20} />
+          <Heart aria-hidden="true" size={20} />
+          <Share aria-hidden="true" size={20} />
         </div>
       </div>
     </div>
