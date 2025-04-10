@@ -5,8 +5,8 @@ const FeedCard = (props) => {
   const { title, category, image } = props;
   return (
     <div className="grey-border flex flex-col gap-2">
-      <div className="img-block">
-        <div className="badge inline-flex items-center rounded-full border border-grey px-2.5 py-0.5 text-xs text-grey">
+      <div className="img-block relative">
+        <div className="badge inline-flex items-center rounded-full px-3 py-1 text-xs border border-white text-dark-gray bg-white shadow-md absolute top-2 left-2">
           Sale
         </div>
         <img src={image} alt="placeholder" className="object-cover" />
