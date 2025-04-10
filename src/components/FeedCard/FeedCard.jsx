@@ -6,6 +6,9 @@ const FeedCard = (props) => {
   return (
     <div className="grey-border flex flex-col gap-2">
       <div className="img-block">
+        <div className="badge inline-flex items-center rounded-full border border-grey px-2.5 py-0.5 text-xs text-grey">
+          Sale
+        </div>
         <img src={image} alt="placeholder" className="object-cover" />
       </div>
       <div className="flex flex-row gap-1 p-2 pb-4 justify-between">
@@ -14,7 +17,7 @@ const FeedCard = (props) => {
             <img
               src={image}
               alt="placeholder"
-              className="object-cover w-full h-auto aspect-square rounded-full max-w-7 max-h-7 md:max-w-9 md:max-h-9"
+              className="object-cover w-full h-auto aspect-square rounded-full max-w-9 max-h-9 md:max-w-10 md:max-h-10"
             />
           </div>
           <div className="artist-name">
