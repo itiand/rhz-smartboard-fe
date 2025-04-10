@@ -1,16 +1,15 @@
 import styles from "./FeedCard.module.css";
 
-const FeedCard = () => {
+const FeedCard = (props) => {
+  const { title, description, image } = props;
   return (
     <div className="grey-border flex flex-col gap-2">
-      <img
-        src="https://placehold.co/600x400"
-        alt="placeholder"
-        className="block"
-      />
-      <div className="flex flex-col gap-2">
-        <h2>Title</h2>
-        <p>Description</p>
+      <div className="img-block">
+        <img src={image} alt="placeholder" className="object-cover" />
+      </div>
+      <div className="flex flex-col gap-1 p-2">
+        <h2>{title}</h2>
+        <p>{description}</p>
       </div>
     </div>
   );
