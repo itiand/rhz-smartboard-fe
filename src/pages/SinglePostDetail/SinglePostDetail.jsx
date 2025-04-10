@@ -136,7 +136,7 @@ const SinglePostDetail = () => {
                     <img
                       src={comment.user.avatar}
                       alt={comment.user.name}
-                      className="w-full h-auto rounded-full max-w-7 max-h-7 md:max-w-9 md:max-h-9"
+                      className="w-full h-auto rounded-full aspect-square max-w-7 max-h-7 md:max-w-9 md:max-h-9"
                     />
                   </div>
                   <div className="comment-text flex-1">
