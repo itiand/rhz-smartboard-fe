@@ -62,12 +62,13 @@ const SmartboardGrid = () => {
 
     // For very tall images (portrait)
     if (aspectRatio < 0.7) {
-      return "max-h-[500px] object-cover border-3 border-red-500"; // Limit height, maintain aspect
+      return "max-h-[300px] md:max-h-[400px] lg:max-h-[500px] object-cover"; // Limit height, maintain aspect
     }
 
     // For very wide images (landscape)
     if (aspectRatio > 2.5) {
-      return "max-h-[300px] object-cover border-3 border-red-500"; // Limit height for wide panoramas
+      // Mobile first approach: smaller height on mobile, larger on desktop
+      return "max-h-[200px] md:max-h-[250px] lg:max-h-[300px] object-cover"; // Limit height for wide panoramas
     }
 
     // Default - let image display naturally with aspect ratio preserved
@@ -75,10 +76,10 @@ const SmartboardGrid = () => {
   };
 
   return (
-    <div className="masonry-grid p-4 columns-2 lg:columns-3 gap-4">
+    <div className="masonry-grid p-2 sm:p-4 columns-1 sm:columns-2 lg:columns-3 gap-2 sm:gap-4">
       {placeholderPosts.map((post) => (
         <Link to={`/post/${post.id}`} key={post.id}>
-          <div className="masonry-grid__item mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow">
+          <div className="masonry-grid__item mb-2 sm:mb-4 break-inside-avoid rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow">
             <img
               src={post.src}
               alt={post.alt}
