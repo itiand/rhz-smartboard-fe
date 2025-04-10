@@ -75,22 +75,22 @@ const SinglePostDetail = () => {
         <button onClick={() => navigate(-1)}>Back</button>
       </div>
 
-      <div className="grid grid-cols-5 gap-4 red-border mb-50">
+      <div className="grid grid-cols-5 gap-4 mb-50 grey-border">
         {/* POST IMAGE - LEFT COLUMN */}
-        <div className="left blue-border col-span-3 flex items-center justify-center">
+        <div className="left col-span-3 flex items-center justify-center">
           <img src={post.image} alt={post.caption} />
         </div>
 
         {/* POST DETAILS - RIGHT COLUMN */}
-        <div className="right post-details-column blue-border col-span-2 p-4 flex flex-col gap-y-4">
+        <div className="right post-details-column col-span-2 p-4 flex flex-col gap-y-4">
           {/* POST TITLE AND HEART ICON */}
           <div className="flex justify-between items-center">
-            <h2>{post.title}</h2>
+            <h2 className="text-3xl">{post.title}</h2>
             <button className="like-button" aria-label="Like post">
               <Heart aria-hidden="true" size={20} />
             </button>
           </div>
-
+          <div className="border-t border-gray-300"></div>
           {/* POST DETAILS */}
           <div className="text-xs leading-5">
             <p>
@@ -122,14 +122,14 @@ const SinglePostDetail = () => {
           </div>
 
           {/* COMMENTS SECTION */}
-          <div className="comments blue-border pb-3">
+          <div className="comments pb-3">
             <p className="text-xs mb-2">{post.comments.length} comments</p>
             {/* COMMENT LIST */}
-            <div className="comments-list green-border flex flex-col gap-y-2">
+            <div className="comments-list flex flex-col gap-y-2">
               {/* COMMENT ITEM */}
               {post.comments.map((comment) => (
                 <div
-                  className="comment-item flex  gap-x-1 text-xs green-border py-1"
+                  className="comment-item flex  gap-x-1 text-xs  py-1"
                   key={comment.id}
                 >
                   <div className="profile-image pt-0.5">
