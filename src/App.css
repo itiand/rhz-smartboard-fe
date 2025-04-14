@@ -46,6 +46,7 @@
   --space-2xl-fluid: clamp(3.13rem, calc(4.44vw + 1.71rem), 7.92rem);
   --space-3xl-fluid: clamp(3.91rem, calc(6.75vw + 1.75rem), 11.19rem);
   --space-4xl-fluid: clamp(4.88rem, calc(10.13vw + 1.64rem), 15.83rem);
+  /* END SPACING */
 }
 
 img {
