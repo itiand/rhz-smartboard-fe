@@ -11,7 +11,7 @@ const Components = () => {
   ];
 
   return (
-    <div className="container grey-border flex flex-col gap-2 justify-center items-center h-screen">
+    <div className="container grey-border flex flex-col gap-2 justify-center items-center">
       <div className="component-list flex flex-col gap-6">
         <div className="component-list-item">
           <h1 className="text-xl font-bold">Edit Smartboard Form</h1>
