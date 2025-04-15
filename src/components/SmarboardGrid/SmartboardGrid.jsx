@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./SmartboardGrid.css";
+import { getImageStyle } from "../../utils/imageUtils";
 
 const SmartboardGrid = () => {
   // Array of placeholder images with different dimensions
@@ -54,26 +55,6 @@ const SmartboardGrid = () => {
       size: "367x100",
     },
   ];
-
-  // Get aspect ratio details for constraining image heights
-  const getImageStyle = (size) => {
-    const [width, height] = size.split("x").map(Number);
-    const aspectRatio = width / height;
-
-    // For very tall images (portrait)
-    if (aspectRatio < 0.7) {
-      return "max-h-[300px] md:max-h-[400px] lg:max-h-[500px] object-cover"; // Limit height, maintain aspect
-    }
-
-    // For very wide images (landscape)
-    if (aspectRatio > 2.5) {
-      // Mobile first approach: smaller height on mobile, larger on desktop
-      return "max-h-[200px] md:max-h-[250px] lg:max-h-[300px] object-cover"; // Limit height for wide panoramas
-    }
-
-    // Default - let image display naturally with aspect ratio preserved
-    return "h-auto";
-  };
 
   return (
     <div className="masonry-grid columns-1 gap-2 p-2 sm:columns-2 sm:gap-4 sm:p-4 lg:columns-3">
