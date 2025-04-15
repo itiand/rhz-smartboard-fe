@@ -56,7 +56,7 @@ const Components = () => {
   ];
 
   return (
-    <div className="container grey-border flex flex-col gap-2 justify-center items-center">
+    <div className="grey-border container flex flex-col items-center justify-center gap-2">
       <div className="component-list flex flex-col gap-6">
         <div className="component-list-item">
           <h1 className="text-xl font-bold">Edit Smartboard Form</h1>
@@ -64,11 +64,11 @@ const Components = () => {
         </div>
         <div className="component-list-item">
           <h1 className="text-xl font-bold">Feed Cards</h1>
-          <div className="masonry-grid p-2 red-border sm:p-4 columns-1 sm:columns-2 lg:columns-3 gap-2">
+          <div className="masonry-grid red-border columns-1 gap-2 p-2 sm:columns-2 sm:p-4 lg:columns-3">
             {feedCards.map((card, index) => (
               <div
                 key={index}
-                className="masonry-grid__item mb-2 sm:mb-4 break-inside-avoid"
+                className="masonry-grid__item mb-2 break-inside-avoid sm:mb-4"
               >
                 <FeedCard
                   title={card.title}
