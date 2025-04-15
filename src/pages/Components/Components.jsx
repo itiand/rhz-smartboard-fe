@@ -5,12 +5,14 @@ const Components = () => {
   const feedCards = [
     {
       title: "Tech News",
-      image: "https://placehold.co/600x400",
+      image:
+        "https://images.unsplash.com/photo-1741648711665-e1a8003b7891?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "Technology",
     },
     {
       title: "Sports Update",
-      image: "https://placehold.co/500x500",
+      image:
+        "https://plus.unsplash.com/premium_photo-1679864497965-57c00454dbd0?q=80&w=3088&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "Sports",
     },
     {
@@ -20,7 +22,8 @@ const Components = () => {
     },
     {
       title: "Business Insights",
-      image: "https://placehold.co/800x400",
+      image:
+        "https://images.unsplash.com/photo-1741683386377-f59badc91174?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "Business",
     },
     {
@@ -50,7 +53,18 @@ const Components = () => {
     },
     {
       title: "Fashion Trends",
-      image: "https://placehold.co/600x600",
+      image: "https://placehold.co/100x600",
+      category: "Fashion",
+    },
+    {
+      title: "Fashion Trends",
+      image: "https://placehold.co/600x100",
+      category: "Fashion",
+    },
+    {
+      title: "Fashion Trends",
+      image:
+        "https://plus.unsplash.com/premium_photo-1679492942912-a7dc8d5be711?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "Fashion",
     },
   ];

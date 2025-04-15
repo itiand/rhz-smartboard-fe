@@ -6,18 +6,20 @@ const FeedCard = (props) => {
   return (
     <div className="grey-border flex flex-col gap-2 md:max-w-120">
       <div className="img-block relative">
-        <div className="badge inline-flex items-center rounded-full px-3 py-1 text-xs border border-white text-dark-gray bg-white shadow-md absolute top-2 left-2">
+        <div className="badge text-dark-gray absolute top-2 left-2 inline-flex items-center rounded-full border border-white bg-white px-3 py-1 text-xs shadow-md">
           Sale
         </div>
-        <img src={image} alt="placeholder" className="object-cover" />
+        <div className="img-container">
+          <img src={image} alt="placeholder" className="object-cover" />
+        </div>
       </div>
-      <div className="flex flex-row gap-1 p-2 pb-4 justify-between">
-        <div className="artist-info flex flex-row gap-2 items-center">
+      <div className="flex flex-row justify-between gap-1 p-2 pb-4">
+        <div className="artist-info flex flex-row items-center gap-2">
           <div className="profile-image pt-0.5">
             <img
               src={image}
               alt="placeholder"
-              className="object-cover w-full h-auto aspect-square rounded-full max-w-9 max-h-9 md:max-w-10 md:max-h-10"
+              className="aspect-square h-auto max-h-9 w-full max-w-9 rounded-full object-cover md:max-h-10 md:max-w-10"
             />
           </div>
           <div className="artist-name">
@@ -25,7 +27,7 @@ const FeedCard = (props) => {
             <p className="text-xs text-gray-500">{category}</p>
           </div>
         </div>
-        <div className=" flex flex-row gap-4 items-center">
+        <div className="flex flex-row items-center gap-4">
           <MessageCircle aria-hidden="true" size={20} />
           <Heart aria-hidden="true" size={20} />
           <Share aria-hidden="true" size={20} />
