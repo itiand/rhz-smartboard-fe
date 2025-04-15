@@ -4,7 +4,7 @@ import { Heart, Share, MessageCircle } from "lucide-react";
 const FeedCard = (props) => {
   const { title, category, image } = props;
   return (
-    <div className="grey-border flex flex-col gap-2 lg:max-w-120">
+    <div className="grey-border flex flex-col gap-2 md:max-w-120">
       <div className="img-block relative">
         <div className="badge inline-flex items-center rounded-full px-3 py-1 text-xs border border-white text-dark-gray bg-white shadow-md absolute top-2 left-2">
           Sale

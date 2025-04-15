@@ -64,14 +64,18 @@ const Components = () => {
         </div>
         <div className="component-list-item">
           <h1 className="text-xl font-bold">Feed Cards</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="masonry-grid p-2 red-border sm:p-4 columns-1 sm:columns-2 lg:columns-3 gap-2">
             {feedCards.map((card, index) => (
-              <FeedCard
+              <div
                 key={index}
-                title={card.title}
-                category={card.category}
-                image={card.image}
-              />
+                className="masonry-grid__item mb-2 sm:mb-4 break-inside-avoid"
+              >
+                <FeedCard
+                  title={card.title}
+                  category={card.category}
+                  image={card.image}
+                />
+              </div>
             ))}
           </div>
         </div>
