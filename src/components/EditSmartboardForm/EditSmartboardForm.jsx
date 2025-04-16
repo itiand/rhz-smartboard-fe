@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 //test for different sizes, extra wide, extra tall, square, landscape, portrait
 const sizes = [
@@ -19,16 +19,33 @@ const getRandomSize = () => {
   return sizes[Math.floor(Math.random() * sizes.length)];
 };
 
+const getImageStyle = (size) => {
+  return `w-full h-full object-cover ${size}`;
+};
+
 const EditSmartboardForm = () => {
+  const [size, setSize] = useState(getRandomSize());
+
+  const changeSize = () => {
+    setSize(getRandomSize());
+  };
+
   return (
-    <div className="create-edit-smartboard-form grey-border grid grid-cols-2 gap-4">
-      <div className="img-side">
-        <img src={"https://placehold.co/" + getRandomSize()} alt="smartboard" />
+    <>
+      <button onClick={() => changeSize()}>Change Size</button>
+      <div className="create-edit-smartboard-form grey-border grid grid-cols-2 gap-4">
+        <div className="img-side">
+          <img
+            src={"https://placehold.co/" + size}
+            alt="smartboard"
+            className={getImageStyle(size)}
+          />
+        </div>
+        <div className="form-side">
+          <h1 className="text-2xl font-bold">Edit Smartboard</h1>
+        </div>
       </div>
-      <div className="form-side">
-        <h1 className="text-2xl font-bold">Edit Smartboard</h1>
-      </div>
-    </div>
+    </>
   );
 };
 
