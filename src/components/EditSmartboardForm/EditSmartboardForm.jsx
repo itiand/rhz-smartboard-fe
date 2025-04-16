@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { UserPlus, ChevronRight, MapPin } from "lucide-react";
 
 //test for different sizes, extra wide, extra tall, square, landscape, portrait
 const sizes = [
@@ -71,67 +72,21 @@ const EditSmartboardForm = () => {
             </div>
 
             {/* Invite people section */}
-            <div className="flex items-center justify-between border-t border-b py-3">
-              <div className="flex items-center">
-                <svg
-                  className="mr-2 h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
-                    fill="currentColor"
-                  />
-                </svg>
+            <div className="flex items-center justify-between border-t border-b border-gray-300 py-3">
+              <div className="flex cursor-pointer items-center gap-2">
+                <UserPlus className="h-4 w-4" />
                 <span>Invite people</span>
               </div>
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronRight className="h-4 w-4 cursor-pointer" />
             </div>
 
             {/* Add location section */}
-            <div className="flex items-center justify-between border-b py-3">
-              <div className="flex items-center">
-                <svg
-                  className="mr-2 h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"
-                    fill="currentColor"
-                  />
-                </svg>
+            <div className="flex items-center justify-between border-b border-gray-300 py-3">
+              <div className="flex cursor-pointer items-center gap-2">
+                <MapPin className="h-4 w-4" />
                 <span>Add location</span>
               </div>
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronRight className="h-4 w-4 cursor-pointer" />
             </div>
 
             {/* Allow comments toggle */}
