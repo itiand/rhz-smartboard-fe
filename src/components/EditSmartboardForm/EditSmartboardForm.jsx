@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UserPlus, ChevronRight, MapPin } from "lucide-react";
+import { UserPlus, ChevronRight, MapPin, SquarePen } from "lucide-react";
 
 //test for different sizes, extra wide, extra tall, square, landscape, portrait
 const sizes = [
@@ -39,11 +39,14 @@ const EditSmartboardForm = () => {
 
       <div className="create-edit-smartboard-form grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
         <div className="img-side flex max-h-[450px] items-center justify-center overflow-hidden rounded-lg bg-gray-50 md:max-h-[650px]">
-          <img
-            src={"https://placehold.co/" + size}
-            alt="smartboard"
-            className="h-full w-full object-contain"
-          />
+          <div className="relative">
+            <SquarePen className="absolute top-2 right-2 h-4 w-4 cursor-pointer" />
+            <img
+              src={"https://placehold.co/" + size}
+              alt="smartboard"
+              className="h-full w-full object-contain"
+            />
+          </div>
         </div>
 
         <div className="form-side rounded-lg border border-gray-300 px-4 py-6">
