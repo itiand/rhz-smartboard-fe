@@ -20,10 +20,6 @@ const getRandomSize = () => {
   return sizes[Math.floor(Math.random() * sizes.length)];
 };
 
-const getImageStyle = (size) => {
-  return `w-full h-full object-cover ${size}`;
-};
-
 const EditSmartboardForm = () => {
   const [size, setSize] = useState(getRandomSize());
   const [allowComments, setAllowComments] = useState(false);
@@ -41,12 +37,12 @@ const EditSmartboardForm = () => {
         Change Size
       </button>
 
-      <div className="create-edit-smartboard-form grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="img-side">
+      <div className="create-edit-smartboard-form red-border grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="img-side red-border flex max-h-[500px] items-center justify-center overflow-hidden rounded-lg">
           <img
             src={"https://placehold.co/" + size}
             alt="smartboard"
-            className={getImageStyle(size)}
+            className="h-full w-full object-contain"
           />
         </div>
 
