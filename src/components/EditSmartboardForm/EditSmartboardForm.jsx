@@ -31,14 +31,14 @@ const EditSmartboardForm = () => {
   return (
     <>
       <button
-        className="mb-2 cursor-pointer rounded-md bg-blue-500 p-2 text-white"
+        className="mb-8 cursor-pointer rounded-md bg-blue-500 p-2 text-white"
         onClick={() => changeSize()}
       >
         Change Size
       </button>
 
-      <div className="create-edit-smartboard-form red-border grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="img-side red-border flex max-h-[500px] items-center justify-center overflow-hidden rounded-lg">
+      <div className="create-edit-smartboard-form grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
+        <div className="img-side flex max-h-[450px] items-center justify-center overflow-hidden rounded-lg bg-gray-50 md:max-h-[650px]">
           <img
             src={"https://placehold.co/" + size}
             alt="smartboard"
