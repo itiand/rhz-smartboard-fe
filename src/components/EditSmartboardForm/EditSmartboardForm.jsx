@@ -32,8 +32,14 @@ const EditSmartboardForm = () => {
 
   return (
     <>
-      <button onClick={() => changeSize()}>Change Size</button>
-      <div className="create-edit-smartboard-form grey-border grid grid-cols-2 gap-4">
+      <button
+        className="mb-2 cursor-pointer rounded-md bg-blue-500 p-2 text-white"
+        onClick={() => changeSize()}
+      >
+        Change Size
+      </button>
+
+      <div className="create-edit-smartboard-form grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="img-side">
           <img
             src={"https://placehold.co/" + size}
@@ -41,8 +47,9 @@ const EditSmartboardForm = () => {
             className={getImageStyle(size)}
           />
         </div>
-        <div className="form-side">
-          <h1 className="text-2xl font-bold">Edit Smartboard</h1>
+
+        <div className="form-side rounded-lg border border-gray-300 px-4 py-6">
+          <h2 className="md:text-md text-lg">Edit Smartboard</h2>
         </div>
       </div>
     </>
