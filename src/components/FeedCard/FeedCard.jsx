@@ -15,7 +15,7 @@ const FeedCard = (props) => {
           <img
             src={image}
             alt={title}
-            className={`min-h-[150px] w-full ${getImageStyle(size)}`}
+            className={`w-full ${getImageStyle(size)}`}
           />
         </div>
       </div>

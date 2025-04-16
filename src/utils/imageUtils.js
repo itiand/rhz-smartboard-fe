@@ -19,7 +19,8 @@ export const getImageStyle = (size) => {
 
   // For very wide images (landscape)
   if (aspectRatio > 2.5) {
-    return "max-h-[200px] md:max-h-[250px] lg:max-h-[300px] object-cover"; // Limit height for wide panoramas
+    // Add min-height to ensure wide images have enough vertical presence
+    return "min-h-[150px] object-cover";
   }
 
   // Default - let image display naturally with aspect ratio preserved

@@ -91,7 +91,7 @@ const Components = () => {
         </div>
         <div className="component-list-item">
           <h1 className="text-xl font-bold">Feed Cards</h1>
-          <div className="masonry-grid red-border columns-1 gap-2 p-2 sm:columns-2 sm:p-4 lg:columns-3">
+          <div className="masonry-grid columns-1 gap-2 sm:columns-2 lg:columns-3">
             {feedCards.map((card, index) => (
               <div
                 key={index}
