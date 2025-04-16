@@ -26,6 +26,7 @@ const getImageStyle = (size) => {
 
 const EditSmartboardForm = () => {
   const [size, setSize] = useState(getRandomSize());
+  const [allowComments, setAllowComments] = useState(false);
 
   const changeSize = () => {
     setSize(getRandomSize());
@@ -90,12 +91,19 @@ const EditSmartboardForm = () => {
             </div>
 
             {/* Allow comments toggle */}
-            <div className="flex items-center justify-between py-3">
-              <span>Allow people to comment</span>
+            <div className="flex items-center gap-2 py-3">
               <label className="relative inline-block h-6 w-12">
-                <input type="checkbox" className="h-0 w-0 opacity-0" />
-                <span className="absolute inset-0 cursor-pointer rounded-full bg-gray-300 transition-all duration-300 before:absolute before:bottom-0.5 before:left-0.5 before:h-5 before:w-5 before:rounded-full before:bg-white before:transition-all before:duration-300 before:content-[''] checked:bg-black checked:before:translate-x-6"></span>
+                <input
+                  type="checkbox"
+                  className="h-0 w-0 opacity-0"
+                  checked={allowComments}
+                  onChange={(e) => setAllowComments(e.target.checked)}
+                />
+                <span
+                  className={`absolute inset-0 cursor-pointer rounded-full transition-all duration-300 before:absolute before:bottom-0.5 before:left-0.5 before:h-5 before:w-5 before:rounded-full before:bg-white before:transition-all before:duration-300 before:content-[''] ${allowComments ? "bg-black before:translate-x-6" : "bg-gray-300"}`}
+                ></span>
               </label>
+              <span>Allow people to comment</span>
             </div>
 
             {/* Action buttons */}
