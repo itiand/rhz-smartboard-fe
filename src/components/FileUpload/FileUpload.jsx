@@ -10,6 +10,7 @@ const FileUpload = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState(null);
   const [boardTitle, setBoardTitle] = useState("Title of Smartboard");
+  const [tempTitle, setTempTitle] = useState("Title of Smartboard"); // Separate state for editing title
   const [previewImage, setPreviewImage] = useState(null); // Store image preview
 
   // Trigger Function when file is uploaded by a user
@@ -99,14 +100,32 @@ const FileUpload = () => {
     }
   };
 
+  // Function to handle Enter key for updating the board title
+  const handleTitleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent form submission or line break
+      setBoardTitle(tempTitle); // Commit the new title
+
+      try {
+        const response = await axios.post("http://127.0.0.1:5000/update_title", {
+          title: tempTitle,
+        });
+        console.log("Title update response:", response.data);
+      } catch (error) {
+        console.error("Error updating title:", error);
+      }
+    }
+  };
+
   return (
     <div className="file-upload-container">
       {/* Editable Smartboard Title */}
       <h2>
         <input
           type="text"
-          value={boardTitle}
-          onChange={(e) => setBoardTitle(e.target.value)}
+          value={tempTitle}
+          onChange={(e) => setTempTitle(e.target.value)}
+          onKeyDown={handleTitleKeyDown}
           placeholder="Enter Smartboard Title"
           style={{
             fontSize: "1.5em",
@@ -129,7 +148,7 @@ const FileUpload = () => {
               type="file"
               name="image"
               accept="image/*"
-              multiple 
+              multiple
               onChange={handleFileChange}
             />
           </label>
@@ -141,7 +160,7 @@ const FileUpload = () => {
               type="file"
               name="audio"
               accept="audio/*"
-              multiple 
+              multiple
               onChange={handleFileChange}
             />
           </label>
@@ -149,7 +168,7 @@ const FileUpload = () => {
         <button type="submit">Upload</button>
       </form>
 
-      {/* Image Preview*/}
+      {/* Image Preview */}
       {previewImage && (
         <div className="image-preview">
           <h3>Image Preview:</h3>
