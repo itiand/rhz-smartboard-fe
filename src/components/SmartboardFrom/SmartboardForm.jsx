@@ -20,7 +20,7 @@ const getRandomSize = () => {
   return sizes[Math.floor(Math.random() * sizes.length)];
 };
 
-const EditSmartboardForm = () => {
+const SmartboardForm = () => {
   const [size, setSize] = useState(getRandomSize());
   const [allowComments, setAllowComments] = useState(false);
 
@@ -127,4 +127,4 @@ const EditSmartboardForm = () => {
   );
 };
 
-export default EditSmartboardForm;
+export default SmartboardForm;

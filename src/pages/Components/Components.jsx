@@ -1,5 +1,5 @@
 import FeedCard from "../../components/FeedCard/FeedCard";
-import EditSmartboardForm from "../../components/EditSmartboardForm/EditSmartboardForm";
+import SmartboardForm from "../../components/SmartboardFrom/SmartboardForm";
 
 const Components = () => {
   // Simulating backend data that includes image dimensions
@@ -83,11 +83,11 @@ const Components = () => {
   ];
 
   return (
-    <div className="grey-border container flex flex-col items-center justify-center gap-2">
+    <div className="grey-border flex flex-col items-center justify-center gap-2 pt-8">
       <div className="component-list flex flex-col gap-6">
         <div className="component-list-item">
-          <h1 className="text-xl font-bold">Edit Smartboard Form</h1>
-          <EditSmartboardForm />
+          <h1 className="mb-5 text-xl font-bold">Smartboard Form</h1>
+          <SmartboardForm />
         </div>
         <div className="component-list-item">
           <h1 className="text-xl font-bold">Feed Cards</h1>
