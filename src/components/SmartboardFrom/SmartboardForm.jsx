@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UserPlus, ChevronRight, MapPin, SquarePen } from "lucide-react";
 
 //test for different sizes, extra wide, extra tall, square, landscape, portrait
@@ -20,12 +20,66 @@ const getRandomSize = () => {
   return sizes[Math.floor(Math.random() * sizes.length)];
 };
 
-const SmartboardForm = () => {
-  const [size, setSize] = useState(getRandomSize());
-  const [allowComments, setAllowComments] = useState(false);
+const SmartboardForm = ({ existingSmartboard = null }) => {
+  // Initialize state with existing data or defaults
+  const [formData, setFormData] = useState({
+    title: existingSmartboard?.title || "",
+    description: existingSmartboard?.description || "",
+    image: existingSmartboard?.image || null,
+    size: existingSmartboard?.size || getRandomSize(),
+  });
+  const [allowComments, setAllowComments] = useState(
+    existingSmartboard?.allowComments || false,
+  );
+
+  // Update form if existingSmartboard changes
+  useEffect(() => {
+    if (existingSmartboard) {
+      setFormData({
+        title: existingSmartboard.title || "",
+        description: existingSmartboard.description || "",
+        image: existingSmartboard.image || null,
+        size: existingSmartboard.size || getRandomSize(),
+      });
+      setAllowComments(existingSmartboard.allowComments || false);
+    }
+  }, [existingSmartboard]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target; // ****
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const smartboardData = {
+      ...formData,
+      allowComments,
+    };
+
+    if (existingSmartboard) {
+      // Update existing smartboard
+      console.log("Updating smartboard:", smartboardData);
+      // Call update API here
+    } else {
+      // Create new smartboard
+      console.log("Creating new smartboard:", smartboardData);
+      // Call create API here
+    }
+  };
+
+  const saveAsDraft = () => {
+    const draftData = {
+      ...formData,
+      allowComments,
+      isDraft: true,
+    };
+    console.log("Saving as draft:", draftData);
+    // Call save draft API here
+  };
 
   const changeSize = () => {
-    setSize(getRandomSize());
+    setFormData((prev) => ({ ...prev, size: getRandomSize() }));
   };
 
   return (
@@ -42,7 +96,7 @@ const SmartboardForm = () => {
           <div className="relative">
             <SquarePen className="absolute top-2 right-2 h-4 w-4 cursor-pointer" />
             <img
-              src={"https://placehold.co/" + size}
+              src={formData.image || "https://placehold.co/" + formData.size}
               alt="smartboard"
               className="h-full w-full object-contain"
             />
@@ -50,13 +104,17 @@ const SmartboardForm = () => {
         </div>
 
         <div className="form-side rounded-lg border border-gray-300 px-4 py-6">
-          <h2 className="md:text-md mb-5 text-lg">Edit Smartboard</h2>
-          <form>
+          <h2 className="md:text-md mb-5 text-lg">
+            {existingSmartboard ? "Edit Smartboard" : "Create Smartboard"}
+          </h2>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="mb-1 block text-sm">Title of Board</label>
               <input
                 type="text"
                 name="title"
+                value={formData.title}
+                onChange={handleChange}
                 placeholder="Title"
                 className="grey-border w-full rounded-md p-2 text-sm"
               />
@@ -65,6 +123,8 @@ const SmartboardForm = () => {
               <label className="mb-1 block text-sm">Description of Board</label>
               <textarea
                 name="description"
+                value={formData.description}
+                onChange={handleChange}
                 placeholder="Description"
                 className="grey-border w-full resize-none rounded-md p-2 text-sm"
                 rows="4"
@@ -109,6 +169,7 @@ const SmartboardForm = () => {
             <div className="mt-4 flex justify-end gap-2">
               <button
                 type="button"
+                onClick={saveAsDraft}
                 className="rounded-full border px-4 py-2 text-sm"
               >
                 Save to drafts
@@ -117,7 +178,7 @@ const SmartboardForm = () => {
                 type="submit"
                 className="rounded-full bg-black px-4 py-2 text-sm text-white"
               >
-                Publish
+                {existingSmartboard ? "Update" : "Publish"}
               </button>
             </div>
           </form>
