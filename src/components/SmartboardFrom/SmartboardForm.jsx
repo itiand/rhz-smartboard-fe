@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UserPlus, ChevronRight, MapPin, SquarePen } from "lucide-react";
+import { UserPlus, ChevronRight, MapPin, SquarePen, Bug } from "lucide-react";
 
 //test for different sizes, extra wide, extra tall, square, landscape, portrait
 // const sizes = [
@@ -32,6 +32,8 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
   const [allowComments, setAllowComments] = useState(
     existingSmartboard?.allowComments || false,
   );
+  // Add debug state
+  const [showDebug, setShowDebug] = useState(false);
 
   // Update form if existingSmartboard changes
   useEffect(() => {
@@ -173,6 +175,42 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
             </div>
           </form>
         </div>
+      </div>
+
+      {/* State Debugging Panel */}
+      <div className="mt-8">
+        <button
+          onClick={() => setShowDebug(!showDebug)}
+          className="mb-2 flex items-center gap-2 text-sm text-gray-500"
+        >
+          <Bug size={16} />
+          {showDebug ? "Hide" : "Show"} Debug Info
+        </button>
+
+        {showDebug && (
+          <div className="max-h-60 overflow-auto rounded-md border border-gray-300 bg-gray-100 p-4">
+            <h3 className="mb-2 text-sm font-bold">Form State</h3>
+            <pre className="text-xs whitespace-pre-wrap">
+              {JSON.stringify(formData, null, 2)}
+            </pre>
+
+            <h3 className="mt-4 mb-2 text-sm font-bold">Allow Comments</h3>
+            <pre className="text-xs">
+              {JSON.stringify(allowComments, null, 2)}
+            </pre>
+
+            <h3 className="mt-4 mb-2 text-sm font-bold">Event Log</h3>
+            <div className="text-xs">
+              <p>
+                • Form was{" "}
+                {existingSmartboard
+                  ? "loaded with existing data"
+                  : "initialized with default values"}
+              </p>
+              <p>• Current mode: {existingSmartboard ? "Update" : "Create"}</p>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
