@@ -2,31 +2,32 @@ import React, { useState, useEffect } from "react";
 import { UserPlus, ChevronRight, MapPin, SquarePen } from "lucide-react";
 
 //test for different sizes, extra wide, extra tall, square, landscape, portrait
-const sizes = [
-  "600x400",
-  "300x600",
-  "400x600",
-  "600x300",
-  "400x300",
-  "100x600",
-  "600x100",
-  "3087x2058",
-  "3088x2056",
-  "3132x2088",
-  "3087x2058",
-];
+// const sizes = [
+//   "600x400",
+//   "300x600",
+//   "400x600",
+//   "600x300",
+//   "400x300",
+//   "100x600",
+//   "600x100",
+//   "3087x2058",
+//   "3088x2056",
+//   "3132x2088",
+//   "3087x2058",
+// ];
 
-const getRandomSize = () => {
-  return sizes[Math.floor(Math.random() * sizes.length)];
-};
+// const getRandomSize = () => {
+//   return sizes[Math.floor(Math.random() * sizes.length)];
+// };
 
 const SmartboardForm = ({ existingSmartboard = null }) => {
+  const [size, setSize] = useState("600x400");
   // Initialize state with existing data or defaults
   const [formData, setFormData] = useState({
     title: existingSmartboard?.title || "",
     description: existingSmartboard?.description || "",
     image: existingSmartboard?.image || null,
-    size: existingSmartboard?.size || getRandomSize(),
+    size: existingSmartboard?.size || size,
   });
   const [allowComments, setAllowComments] = useState(
     existingSmartboard?.allowComments || false,
@@ -39,7 +40,7 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
         title: existingSmartboard.title || "",
         description: existingSmartboard.description || "",
         image: existingSmartboard.image || null,
-        size: existingSmartboard.size || getRandomSize(),
+        size: existingSmartboard.size || size,
       });
       setAllowComments(existingSmartboard.allowComments || false);
     }
@@ -78,19 +79,8 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
     // Call save draft API here
   };
 
-  const changeSize = () => {
-    setFormData((prev) => ({ ...prev, size: getRandomSize() }));
-  };
-
   return (
     <>
-      <button
-        className="mb-8 cursor-pointer rounded-md bg-blue-500 p-2 text-white"
-        onClick={() => changeSize()}
-      >
-        Change Size
-      </button>
-
       <div className="create-edit-smartboard-form grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
         <div className="img-side flex max-h-[450px] items-center justify-center overflow-hidden rounded-lg bg-gray-50 md:max-h-[650px]">
           <div className="relative">
