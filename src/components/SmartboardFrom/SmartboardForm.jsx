@@ -1,35 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { UserPlus, ChevronRight, MapPin, SquarePen, Bug } from "lucide-react";
 
-//test for different sizes, extra wide, extra tall, square, landscape, portrait
-// const sizes = [
-//   "600x400",
-//   "300x600",
-//   "400x600",
-//   "600x300",
-//   "400x300",
-//   "100x600",
-//   "600x100",
-//   "3087x2058",
-//   "3088x2056",
-//   "3132x2088",
-//   "3087x2058",
-// ];
-
-// const getRandomSize = () => {
-//   return sizes[Math.floor(Math.random() * sizes.length)];
-// };
-
 const SmartboardForm = ({ existingSmartboard = null }) => {
   // Initialize state with existing data or defaults
   const [formData, setFormData] = useState({
     title: existingSmartboard?.title || "",
     description: existingSmartboard?.description || "",
     image: existingSmartboard?.image || null,
+    allowComments: existingSmartboard?.allowComments || false,
   });
-  const [allowComments, setAllowComments] = useState(
-    existingSmartboard?.allowComments || false,
-  );
 
   // Add debug state
   const [showDebug, setShowDebug] = useState(false);
@@ -43,14 +22,23 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
         title: existingSmartboard.title || "",
         description: existingSmartboard.description || "",
         image: existingSmartboard.image || null,
+        allowComments: existingSmartboard.allowComments || false,
       });
-      setAllowComments(existingSmartboard.allowComments || false);
     }
   }, [existingSmartboard]);
 
   const handleChange = (e) => {
     const { name, value } = e.target; // ****
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle toggle for allowComments
+  const handleAllowCommentsToggle = (e) => {
+    // Update allowComments within formData
+    setFormData((prev) => ({
+      ...prev,
+      allowComments: e.target.checked,
+    }));
   };
 
   const handleImageUpload = (e) => {
@@ -71,10 +59,8 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const smartboardData = {
-      ...formData,
-      allowComments,
-    };
+
+    const smartboardData = formData;
 
     if (existingSmartboard) {
       // Update existing smartboard
@@ -90,7 +76,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
   const saveAsDraft = () => {
     const draftData = {
       ...formData,
-      allowComments,
       isDraft: true,
     };
     console.log("Saving as draft:", draftData);
@@ -193,11 +178,11 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
                 <input
                   type="checkbox"
                   className="h-0 w-0 opacity-0"
-                  checked={allowComments}
-                  onChange={(e) => setAllowComments(e.target.checked)}
+                  checked={formData.allowComments}
+                  onChange={handleAllowCommentsToggle}
                 />
                 <span
-                  className={`absolute inset-0 cursor-pointer rounded-full transition-all duration-300 before:absolute before:bottom-0.5 before:left-0.5 before:h-5 before:w-5 before:rounded-full before:bg-white before:transition-all before:duration-300 before:content-[''] ${allowComments ? "bg-black before:translate-x-6" : "bg-gray-300"}`}
+                  className={`absolute inset-0 cursor-pointer rounded-full transition-all duration-300 before:absolute before:bottom-0.5 before:left-0.5 before:h-5 before:w-5 before:rounded-full before:bg-white before:transition-all before:duration-300 before:content-[''] ${formData.allowComments ? "bg-black before:translate-x-6" : "bg-gray-300"}`}
                 ></span>
               </label>
               <span>Allow people to comment</span>
@@ -238,11 +223,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
             <h3 className="mb-2 text-sm font-bold">Form State</h3>
             <pre className="text-xs whitespace-pre-wrap">
               {JSON.stringify(formData, null, 2)}
-            </pre>
-
-            <h3 className="mt-4 mb-2 text-sm font-bold">Allow Comments</h3>
-            <pre className="text-xs">
-              {JSON.stringify(allowComments, null, 2)}
             </pre>
 
             <h3 className="mt-4 mb-2 text-sm font-bold">Event Log</h3>
