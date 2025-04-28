@@ -56,6 +56,22 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      console.log("imageUrl", imageUrl);
+      setImageFile(file);
+      setFormData((prev) => ({ ...prev, image: imageUrl }));
+    }
+  };
+
+  const triggerFileSelection = () => {
+    console.log("triggering file selection");
+    console.log(fileInputRef.current);
+    fileInputRef.current.click();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const smartboardData = {
@@ -88,13 +104,43 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
     <>
       <div className="create-edit-smartboard-form grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
         <div className="img-side flex max-h-[450px] items-center justify-center overflow-hidden rounded-lg bg-gray-50 md:max-h-[650px]">
-          <div className="relative">
-            <SquarePen className="absolute top-2 right-2 h-4 w-4 cursor-pointer" />
-            <img
-              src={formData.image || "https://placehold.co/" + formData.size}
-              alt="smartboard"
-              className="h-full w-full object-contain"
+          <div className="relative h-full w-full">
+            {/* Hidden file input */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              accept="image/*"
+              onChange={handleImageUpload}
             />
+
+            {formData.image ? (
+              // Show image with edit option when an image exists
+              <>
+                <SquarePen
+                  className="absolute top-2 right-2 z-10 h-4 w-4 cursor-pointer"
+                  onClick={triggerFileSelection}
+                />
+                <img
+                  src={formData.image}
+                  alt="smartboard"
+                  className="h-full w-full object-contain"
+                />
+              </>
+            ) : (
+              // Show upload prompt when no image is selected
+              <div
+                className="flex h-full w-full cursor-pointer flex-col items-center justify-center"
+                onClick={triggerFileSelection}
+              >
+                <div className="rounded-full bg-gray-200 p-4">
+                  <SquarePen className="h-8 w-8 text-gray-500" />
+                </div>
+                <p className="mt-2 text-sm text-gray-500">
+                  Click to upload image
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

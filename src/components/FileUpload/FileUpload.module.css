@@ -17,9 +17,9 @@
 }
 
 /* Make the file input */
-input[type="file"] {
+/* input[type="file"] {
   display: block;
-}
+} */
 
 /* Upload button */
 .upload-button {
