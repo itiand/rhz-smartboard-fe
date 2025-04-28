@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { UserPlus, ChevronRight, MapPin, SquarePen, Bug } from "lucide-react";
 
 //test for different sizes, extra wide, extra tall, square, landscape, portrait
@@ -32,8 +32,11 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
   const [allowComments, setAllowComments] = useState(
     existingSmartboard?.allowComments || false,
   );
+
   // Add debug state
   const [showDebug, setShowDebug] = useState(false);
+  const fileInputRef = useRef(null);
+  const [imageFile, setImageFile] = useState(null);
 
   // Update form if existingSmartboard changes
   useEffect(() => {
@@ -208,6 +211,11 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
                   : "initialized with default values"}
               </p>
               <p>• Current mode: {existingSmartboard ? "Update" : "Create"}</p>
+            </div>
+            {/* state tracker */}
+            <div className="mt-4">
+              <h3 className="mb-2 text-sm font-bold">State Tracker</h3>
+              <pre className="text-xs">{JSON.stringify(formData, null, 2)}</pre>
             </div>
           </div>
         )}
