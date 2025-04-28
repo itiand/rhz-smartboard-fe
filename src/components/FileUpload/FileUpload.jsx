@@ -13,6 +13,8 @@ const FileUpload = () => {
   const [tempTitle, setTempTitle] = useState("Title of Smartboard"); // Separate state for editing title
   const [previewImage, setPreviewImage] = useState(null); // Store image preview
 
+  const backendURL = "http://34.228.71.135:5000"; // Static for now
+
   // Trigger Function when file is uploaded by a user
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -47,9 +49,9 @@ const FileUpload = () => {
       setUploadStatus("Uploading...");
       setErrorMessage(null);
 
-      // Send the file to the backend using the local host I setup in the backend
+      // Send the file to the backend using the static URL
       const response = await axios.post(
-        "http://127.0.0.1:5000/upload",
+        `${backendURL}/upload`,
         formData,
         {
           headers: {
@@ -71,11 +73,11 @@ const FileUpload = () => {
     }
   };
 
-  // Function to handle file deletion
+  // Function to handle file deletion (updated to use DELETE instead of POST)
   const handleDelete = async (filename) => {
     try {
       // Sending DELETE request to backend to remove file
-      const response = await axios.delete(`http://127.0.0.1:5000/upload/${filename}`);
+      const response = await axios.delete(`${backendURL}/upload/${filename}`);
 
       // Log the response to debug
       console.log("Backend Response (File Deletion):", response.data);
@@ -107,7 +109,7 @@ const FileUpload = () => {
       setBoardTitle(tempTitle); // Commit the new title
 
       try {
-        const response = await axios.post("http://127.0.0.1:5000/update_title", {
+        const response = await axios.post(`${backendURL}/update_title`, { 
           title: tempTitle,
         });
         console.log("Title update response:", response.data);
