@@ -21,13 +21,11 @@ import { UserPlus, ChevronRight, MapPin, SquarePen, Bug } from "lucide-react";
 // };
 
 const SmartboardForm = ({ existingSmartboard = null }) => {
-  const [size, setSize] = useState("600x400");
   // Initialize state with existing data or defaults
   const [formData, setFormData] = useState({
     title: existingSmartboard?.title || "",
     description: existingSmartboard?.description || "",
     image: existingSmartboard?.image || null,
-    size: existingSmartboard?.size || size,
   });
   const [allowComments, setAllowComments] = useState(
     existingSmartboard?.allowComments || false,
@@ -45,7 +43,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
         title: existingSmartboard.title || "",
         description: existingSmartboard.description || "",
         image: existingSmartboard.image || null,
-        size: existingSmartboard.size || size,
       });
       setAllowComments(existingSmartboard.allowComments || false);
     }
@@ -104,7 +101,7 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
     <>
       <div className="create-edit-smartboard-form grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
         <div className="img-side flex max-h-[450px] items-center justify-center overflow-hidden rounded-lg bg-gray-50 md:max-h-[650px]">
-          <div className="relative h-full w-full">
+          <div className="relative flex h-full w-full items-center justify-center">
             {/* Hidden file input */}
             <input
               type="file"
@@ -257,11 +254,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
                   : "initialized with default values"}
               </p>
               <p>• Current mode: {existingSmartboard ? "Update" : "Create"}</p>
-            </div>
-            {/* state tracker */}
-            <div className="mt-4">
-              <h3 className="mb-2 text-sm font-bold">State Tracker</h3>
-              <pre className="text-xs">{JSON.stringify(formData, null, 2)}</pre>
             </div>
           </div>
         )}
