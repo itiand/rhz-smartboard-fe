@@ -80,6 +80,46 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!formData.image) {
+      console.error("No image to delete");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/smartboard", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image_filename: formData.image }),  // Send the image filename to the backend
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        console.log("Smartboard deleted successfully:", result.message);
+
+        setFormData({
+          title: "",
+          description: "",
+          image: null,
+          audio: null,
+          allowComments: false,
+        });
+        setImageFile(null);
+        setAudioFile(null);
+
+        await fetch("http://localhost:5000/log", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: "Smartboard was deleted" }),
+        });
+      } else {
+        console.error("Delete failed:", result.error);
+      }
+    } catch (error) {
+      console.error("Delete request failed:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -98,39 +138,58 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
     }
   };
 
-  const handleAllowCommentsToggle = (e) => {
+  const handleAllowCommentsToggle = async (e) => {
+    const newValue = e.target.checked;
     setFormData((prev) => ({
       ...prev,
-      allowComments: e.target.checked,
+      allowComments: newValue,
     }));
+
+    // Send a log to the backend when the allowComments toggle is changed
+    try {
+      await fetch("http://localhost:5000/log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: `Allow comments toggled ${newValue ? "on" : "off"}`,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to log allowComments toggle:", error);
+    }
   };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
+  
+    const MAX_FILE_SIZE_MB = 16;
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      alert(`File too large. Max allowed size is ${MAX_FILE_SIZE_MB}MB.`);
+      return;
+    }
+  
     const localUrl = URL.createObjectURL(file);
     setFormData((prev) => ({ ...prev, image: localUrl }));
     setImageFile(file);
-
+  
     const formDataToUpload = new FormData();
     formDataToUpload.append("image", file);
-
+  
     try {
       await fetch("http://localhost:5000/log", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: "User is uploading an image" }),
       });
-
+  
       const response = await fetch("http://localhost:5000/smartboard", {
         method: "POST",
         body: formDataToUpload,
       });
-
+  
       const result = await response.json();
       if (response.ok) {
-        // Safely update formData if the result is correct
         if (result.files && result.files.image) {
           setFormData((prev) => ({ ...prev, image: result.files.image[0] }));
           console.log("Uploaded to S3:", result.files.image[0]);
@@ -144,7 +203,7 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
       console.error("Upload error:", error);
     }
   };
-
+  
   const handleAudioUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -326,6 +385,15 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
               >
                 {existingSmartboard ? "Update" : "Publish"}
               </button>
+              {(formData.image || formData.audio) && (
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="rounded-full bg-red-500 px-4 py-2 text-sm text-white"
+                >
+                  Delete Media
+                </button>
+              )}
             </div>
           </form>
         </div>
