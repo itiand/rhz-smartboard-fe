@@ -2,74 +2,194 @@ import React, { useState, useEffect, useRef } from "react";
 import { UserPlus, ChevronRight, MapPin, SquarePen, Bug } from "lucide-react";
 
 const SmartboardForm = ({ existingSmartboard = null }) => {
-  // Initialize state with existing data or defaults
   const [formData, setFormData] = useState({
     title: existingSmartboard?.title || "",
     description: existingSmartboard?.description || "",
     image: existingSmartboard?.image || null,
+    audio: existingSmartboard?.audio || null,
     allowComments: existingSmartboard?.allowComments || false,
   });
 
-  // Add debug state
   const [showDebug, setShowDebug] = useState(false);
   const fileInputRef = useRef(null);
+  const audioInputRef = useRef(null);
   const [imageFile, setImageFile] = useState(null);
+  const [audioFile, setAudioFile] = useState(null);
 
-  // Update form if existingSmartboard changes
   useEffect(() => {
     if (existingSmartboard) {
       setFormData({
         title: existingSmartboard.title || "",
         description: existingSmartboard.description || "",
         image: existingSmartboard.image || null,
+        audio: existingSmartboard.audio || null,
         allowComments: existingSmartboard.allowComments || false,
       });
     }
   }, [existingSmartboard]);
 
+  const updateTitle = async (newTitle) => {
+    try {
+      const response = await fetch("http://localhost:5000/smartboard", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: newTitle }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("Error updating title:", data.error);
+      } else {
+        console.log("Title updated successfully:", data.message);
+
+        // Send a log to the backend about the title update
+        await fetch("http://localhost:5000/log", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: `Title updated to: ${newTitle}` })
+        });
+      }
+    } catch (error) {
+      console.error("Network error while updating title:", error);
+    }
+  };
+
+  const updateDescription = async (newDescription) => {
+    try {
+      const response = await fetch("http://localhost:5000/smartboard", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: newDescription }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("Error updating description:", data.error);
+      } else {
+        console.log("Description updated successfully:", data.message);
+
+        // Send a log to the backend about the description update
+        await fetch("http://localhost:5000/log", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: `Description updated to: ${newDescription}` }),
+        });
+      }
+    } catch (error) {
+      console.error("Network error while updating description:", error);
+    }
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target; // ****
+    const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle toggle for allowComments
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      updateTitle(formData.title);
+    }
+  };
+
+  const handleDescriptionKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent newline in textarea
+      updateDescription(formData.description);
+    }
+  };
+
   const handleAllowCommentsToggle = (e) => {
-    // Update allowComments within formData
     setFormData((prev) => ({
       ...prev,
       allowComments: e.target.checked,
     }));
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      console.log("imageUrl", imageUrl);
-      setImageFile(file);
-      setFormData((prev) => ({ ...prev, image: imageUrl }));
+    if (!file) return;
+
+    const localUrl = URL.createObjectURL(file);
+    setFormData((prev) => ({ ...prev, image: localUrl }));
+    setImageFile(file);
+
+    const formDataToUpload = new FormData();
+    formDataToUpload.append("image", file);
+
+    try {
+      await fetch("http://localhost:5000/log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: "User is uploading an image" }),
+      });
+
+      const response = await fetch("http://localhost:5000/smartboard", {
+        method: "POST",
+        body: formDataToUpload,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        // Safely update formData if the result is correct
+        if (result.files && result.files.image) {
+          setFormData((prev) => ({ ...prev, image: result.files.image[0] }));
+          console.log("Uploaded to S3:", result.files.image[0]);
+        } else {
+          console.error("Invalid result format:", result);
+        }
+      } else {
+        console.error("Upload failed:", result);
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
+  };
+
+  const handleAudioUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const localUrl = URL.createObjectURL(file);
+    setFormData((prev) => ({ ...prev, audio: localUrl }));
+    setAudioFile(file);
+
+    const formDataToUpload = new FormData();
+    formDataToUpload.append("audio", file);
+
+    try {
+      const response = await fetch("http://localhost:5000/upload_audio", {
+        method: "POST",
+        body: formDataToUpload,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        setFormData((prev) => ({ ...prev, audio: result.files.audio[0] }));
+        console.log("Uploaded audio to S3:", result.files.audio[0]);
+      } else {
+        console.error("Audio upload failed:", result);
+      }
+    } catch (error) {
+      console.error("Audio upload error:", error);
     }
   };
 
   const triggerFileSelection = () => {
-    console.log("triggering file selection");
-    console.log(fileInputRef.current);
     fileInputRef.current.click();
+  };
+
+  const triggerAudioSelection = () => {
+    audioInputRef.current.click();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const smartboardData = formData;
 
     if (existingSmartboard) {
-      // Update existing smartboard
       console.log("Updating smartboard:", smartboardData);
-      // Call update API here
     } else {
-      // Create new smartboard
       console.log("Creating new smartboard:", smartboardData);
-      // Call create API here
     }
   };
 
@@ -79,7 +199,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
       isDraft: true,
     };
     console.log("Saving as draft:", draftData);
-    // Call save draft API here
   };
 
   return (
@@ -87,7 +206,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
       <div className="create-edit-smartboard-form grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
         <div className="img-side flex max-h-[450px] items-center justify-center overflow-hidden rounded-lg bg-gray-50 md:max-h-[650px]">
           <div className="relative flex h-full w-full items-center justify-center">
-            {/* Hidden file input */}
             <input
               type="file"
               ref={fileInputRef}
@@ -95,9 +213,14 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
               accept="image/*"
               onChange={handleImageUpload}
             />
-
+            <input
+              type="file"
+              ref={audioInputRef}
+              className="hidden"
+              accept="audio/*"
+              onChange={handleAudioUpload}
+            />
             {formData.image ? (
-              // Show image with edit option when an image exists
               <>
                 <SquarePen
                   className="absolute top-2 right-2 z-10 h-4 w-4 cursor-pointer"
@@ -110,7 +233,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
                 />
               </>
             ) : (
-              // Show upload prompt when no image is selected
               <div
                 className="flex h-full w-full cursor-pointer flex-col items-center justify-center"
                 onClick={triggerFileSelection}
@@ -138,6 +260,7 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 placeholder="Title"
                 className="grey-border w-full rounded-md p-2 text-sm"
               />
@@ -148,13 +271,13 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
+                onKeyDown={handleDescriptionKeyDown}
                 placeholder="Description"
                 className="grey-border w-full resize-none rounded-md p-2 text-sm"
                 rows="4"
               />
             </div>
 
-            {/* Invite people section */}
             <div className="flex items-center justify-between border-t border-b border-gray-300 py-3">
               <div className="flex cursor-pointer items-center gap-2">
                 <UserPlus className="h-4 w-4" />
@@ -163,7 +286,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
               <ChevronRight className="h-4 w-4 cursor-pointer" />
             </div>
 
-            {/* Add location section */}
             <div className="flex items-center justify-between border-b border-gray-300 py-3">
               <div className="flex cursor-pointer items-center gap-2">
                 <MapPin className="h-4 w-4" />
@@ -172,7 +294,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
               <ChevronRight className="h-4 w-4 cursor-pointer" />
             </div>
 
-            {/* Allow comments toggle */}
             <div className="flex items-center gap-2 py-3">
               <label className="relative inline-block h-6 w-12">
                 <input
@@ -182,13 +303,15 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
                   onChange={handleAllowCommentsToggle}
                 />
                 <span
-                  className={`absolute inset-0 cursor-pointer rounded-full transition-all duration-300 before:absolute before:bottom-0.5 before:left-0.5 before:h-5 before:w-5 before:rounded-full before:bg-white before:transition-all before:duration-300 before:content-[''] ${formData.allowComments ? "bg-black before:translate-x-6" : "bg-gray-300"}`}
-                ></span>
+                  className={`absolute inset-0 cursor-pointer rounded-full transition-all duration-300 before:absolute before:bottom-0.5 before:left-0.5 before:h-5 before:w-5 before:rounded-full before:bg-white before:transition-all before:duration-300 before:content-[''] ${
+                    formData.allowComments
+                      ? "bg-black before:translate-x-6"
+                      : "bg-gray-300"
+                  }`}></span>
               </label>
               <span>Allow people to comment</span>
             </div>
 
-            {/* Action buttons */}
             <div className="mt-4 flex justify-end gap-2">
               <button
                 type="button"
@@ -208,7 +331,6 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
         </div>
       </div>
 
-      {/* State Debugging Panel */}
       <div className="mt-8">
         <button
           onClick={() => setShowDebug(!showDebug)}
@@ -220,21 +342,8 @@ const SmartboardForm = ({ existingSmartboard = null }) => {
 
         {showDebug && (
           <div className="max-h-60 overflow-auto rounded-md border border-gray-300 bg-gray-100 p-4">
-            <h3 className="mb-2 text-sm font-bold">Form State</h3>
-            <pre className="text-xs whitespace-pre-wrap">
-              {JSON.stringify(formData, null, 2)}
-            </pre>
-
-            <h3 className="mt-4 mb-2 text-sm font-bold">Event Log</h3>
-            <div className="text-xs">
-              <p>
-                • Form was{" "}
-                {existingSmartboard
-                  ? "loaded with existing data"
-                  : "initialized with default values"}
-              </p>
-              <p>• Current mode: {existingSmartboard ? "Update" : "Create"}</p>
-            </div>
+            <h3 className="mb-2 text-xs text-gray-500">State Debug</h3>
+            <pre className="text-xs">{JSON.stringify(formData, null, 2)}</pre>
           </div>
         )}
       </div>
